@@ -7,7 +7,7 @@ import traceback
 from uuid import uuid4
 
 import flask
-import structlog
+import structlog as logging
 
 import config
 import logger as nsa_logger
@@ -30,7 +30,7 @@ app.config["PERMANENT_SESSION_LIFETIME"] = 60 * 10  # seconds
 
 nsa_logger.configure()
 
-logger = structlog.getLogger("netsocadmin")
+logger = logging.getLogger("netsocadmin")
 
 
 @app.route('/')
