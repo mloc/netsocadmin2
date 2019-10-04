@@ -48,7 +48,8 @@ The UCC Netsoc SysAdmin Team
             message_body,
         )
     else:
-        response = type("Response", (object,), {"status_code": 200, "token": uri})
+        response = type("Response", (object,), {
+                        "status_code": 200, "token": uri})
     return response
 
 
@@ -209,9 +210,11 @@ def add_ldap_user(user: str) -> typing.Dict[str, object]:
 
         # creates initial password for user. They will be asked to change
         # this when they first log in.
-        password = "".join(random.choice(string.ascii_letters + string.digits) for _ in range(12))
+        password = "".join(random.choice(
+            string.ascii_letters + string.digits) for _ in range(12))
         # pylint: disable=E1101
-        crypt_password = "{crypt}" + crypt.crypt(password,  crypt.mksalt(crypt.METHOD_SHA512))
+        crypt_password = "{crypt}" + \
+            crypt.crypt(password,  crypt.mksalt(crypt.METHOD_SHA512))
         info["password"] = password
         info["crypt_password"] = crypt_password
 

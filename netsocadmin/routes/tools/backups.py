@@ -19,8 +19,10 @@ class BackupsView(ProtectedToolView):
 
     def dispatch_request(self):
         return self.render(
-            monthly_backups=backup_tools.list_backups(flask.session["username"], "monthly"),
-            weekly_backups=backup_tools.list_backups(flask.session["username"], "weekly"),
+            monthly_backups=backup_tools.list_backups(
+                flask.session["username"], "monthly"),
+            weekly_backups=backup_tools.list_backups(
+                flask.session["username"], "weekly"),
         )
 
 
@@ -45,5 +47,6 @@ class Backup(ProtectedToolView):
                 or timeframe not in ["weekly", "monthly"]:
             return flask.abort(400)
         # Retrieve the backup and send it to the user
-        backups_base_dir = os.path.join(config.BACKUPS_DIR, username, timeframe)
+        backups_base_dir = os.path.join(
+            config.BACKUPS_DIR, username, timeframe)
         return flask.send_from_directory(backups_base_dir, f"{backup_date}.tgz")

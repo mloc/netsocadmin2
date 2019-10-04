@@ -64,7 +64,8 @@ class CompleteSudo(Sudo):
         try:
             subject = "Feynman Account Request"
             msg = f"This user wants an account on Feynman pls.\nReason: {reason}"
-            discord_failed = help_post.send_help_webhook(username, email, subject, msg)
+            discord_failed = help_post.send_help_webhook(
+                username, email, subject, msg)
         except Exception as e:
             discord_failed = True
             self.logger.error(f"failed to fire discord webhook: {e}")

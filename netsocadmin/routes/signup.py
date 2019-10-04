@@ -192,7 +192,8 @@ class Confirmation(View):
             "admin.netsoc.co" if not config.FLASK_CONFIG["debug"]
             else f"{config.FLASK_CONFIG['host']}:{config.FLASK_CONFIG['port']}"
         )
-        confirmation_resp = register_tools.send_confirmation_email(email, out_email)
+        confirmation_resp = register_tools.send_confirmation_email(
+            email, out_email)
         if not str(confirmation_resp.status_code).startswith("20"):
             self.logger.error("confirmation email failed to send")
             return flask.render_template(
@@ -227,7 +228,8 @@ class Signup(View):
         if error:
             self.logger.warn(f"bad token {token} used for email {email}")
             template = "index.html"
-            kw = {"error_message": "Your request was not valid. Please try again or contact us."}
+            kw = {
+                "error_message": "Your request was not valid. Please try again or contact us."}
         else:
             template = "form.html"
             kw = {"email_address": email, "token": token}
@@ -254,7 +256,8 @@ class Username(View):
     def dispatch_request(self) -> str:
         if ("email" not in flask.request.headers or "uid" not in flask.request.headers or
                 "token" not in flask.request.headers):
-            self.logger.info("invalid request some information missing, aborting.")
+            self.logger.info(
+                "invalid request some information missing, aborting.")
             return flask.abort(400)
 
         # check if request is legit

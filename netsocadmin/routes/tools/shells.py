@@ -18,7 +18,8 @@ class ShellsView(ProtectedToolView):
     def dispatch_request(self, **data):
         ldap_server = ldap3.Server(config.LDAP_HOST, get_info=ldap3.ALL)
         with ldap3.Connection(ldap_server, auto_bind=True, **config.LDAP_AUTH) as conn:
-            username = ldap3.utils.conv.escape_filter_chars(flask.session["username"])
+            username = ldap3.utils.conv.escape_filter_chars(
+                flask.session["username"])
             success = conn.search(
                 search_base="dc=netsoc,dc=co",
                 search_filter=f"(&(objectClass=account)(uid={username}))",
@@ -49,7 +50,8 @@ class ChangeShell(ProtectedView):
 
     def dispatch_request(self):
         # Ensure the selected shell is in the list of allowed shells
-        shell_path = config.SHELL_PATHS.get(flask.request.args.get("shell", ""), None)
+        shell_path = config.SHELL_PATHS.get(
+            flask.request.args.get("shell", ""), None)
         if shell_path is None:
             return "Invalid shell received", 400
         # Attempt to update LDAP for the logged in user to update their loginShell
@@ -76,7 +78,8 @@ class ChangeShell(ProtectedView):
             try:
                 success = conn.modify(
                     dn=f"cn={username},cn={group},dc=netsoc,dc=co",
-                    changes={"loginShell": (ldap3.MODIFY_REPLACE, [shell_path])},
+                    changes={"loginShell": (
+                        ldap3.MODIFY_REPLACE, [shell_path])},
                 )
                 if not success:
                     self.logger.error(f"error changing shell for {username}: {conn.last_error}")

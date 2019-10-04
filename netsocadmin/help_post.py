@@ -84,7 +84,8 @@ def send_help_webhook(username: str, email: str, subject: str, message: str) -> 
     headers = {'Content-Type': 'application/json'}
 
     if not config.FLASK_CONFIG['debug']:
-        response = requests.post(config.DISCORD_WEBHOOK_ADDRESS, json=output, headers=headers)
+        response = requests.post(
+            config.DISCORD_WEBHOOK_ADDRESS, json=output, headers=headers)
     else:
         response = type("Response", (object,), {"status_code": 200})
     return response.status_code == 200

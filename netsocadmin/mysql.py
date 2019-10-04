@@ -109,7 +109,8 @@ def create_user(username: str) -> str:
 
             # create new user
             chars = string.ascii_letters + string.digits
-            password = "".join(random.choice(chars) for _ in range(random.randint(10, 15)))
+            password = "".join(random.choice(chars)
+                               for _ in range(random.randint(10, 15)))
             sql = """CREATE USER %s@'%%' IDENTIFIED BY %s;"""
             cur.execute(sql, (username, password,))
             if not config.FLASK_CONFIG["debug"]:

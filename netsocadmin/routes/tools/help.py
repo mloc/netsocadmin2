@@ -43,7 +43,8 @@ class Help(HelpView):
 
         # Send the email
         try:
-            email_resp = help_post.send_help_email(flask.session["username"], email, subject, message)
+            email_resp = help_post.send_help_email(
+                flask.session["username"], email, subject, message)
             if not str(email_resp.status_code).startswith("20"):
                 self.logger.error(f"non 20x status code for help email: {email_resp.status_code} - {email_resp.body}")
             sent_email = str(email_resp.status_code).startswith("20")
@@ -52,7 +53,8 @@ class Help(HelpView):
 
         # Try and send to Discord
         try:
-            sent_discord = help_post.send_help_webhook(flask.session["username"], email, subject, message)
+            sent_discord = help_post.send_help_webhook(
+                flask.session["username"], email, subject, message)
         except Exception as e:
             self.logger.error(f"failed to send help discord webhook: {str(e)}")
 

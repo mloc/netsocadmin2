@@ -171,7 +171,8 @@ def create_wordpress_conf(user_dir, db_conf):
 
     def get_wordpress_conf_keys():
         logger.info("Fetching wordpress configuration")
-        response = requests.get("https://api.wordpress.org/secret-key/1.1/salt/")
+        response = requests.get(
+            "https://api.wordpress.org/secret-key/1.1/salt/")
         return response.text
 
     wordpress_config = template.render(USER_DIR=user_dir,
@@ -180,7 +181,8 @@ def create_wordpress_conf(user_dir, db_conf):
                                        DB_PASSWORD=db_conf["password"],
                                        DB_HOST=db_conf["host"],
                                        KEYS=get_wordpress_conf_keys())
-    logger.info("Wordpress configuration rendered from template, writing to file")
+    logger.info(
+        "Wordpress configuration rendered from template, writing to file")
 
     with open(user_dir + "/public_html/wordpress/wp-config.php", "w") as fh:
         fh.write(wordpress_config)
@@ -212,8 +214,10 @@ def get_wordpress(user_dir, username, is_debug_mode):
             extract_from_tar(filename, user_dir + "/public_html")
             delete_file(filename)
         except Exception as e:
-            logger.warning("An issue has occured while trying to download wordpress\n" + str(e))
-            raise Exception("An issue has occured while trying to download wordpress")
+            logger.warning(
+                "An issue has occured while trying to download wordpress\n" + str(e))
+            raise Exception(
+                "An issue has occured while trying to download wordpress")
 
     def configure(user_dir, username):
         try:
