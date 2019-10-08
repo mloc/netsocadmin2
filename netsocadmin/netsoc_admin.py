@@ -3,18 +3,21 @@ This file contains the main webapp for netsoc admin.
 Sets up a local server running the website. Requests should
 then be proxied to this address.
 """
+# stdlib
 import traceback
 from uuid import uuid4
 
+# lib
 import flask
+import sentry_sdk
 import structlog as logging
+from sentry_sdk.integrations.flask import FlaskIntegration
 
+# local
 import config
 import logger as nsa_logger
 import login_tools
 import routes
-import sentry_sdk
-from sentry_sdk.integrations.flask import FlaskIntegration
 
 # init sentry
 sentry_sdk.init(
